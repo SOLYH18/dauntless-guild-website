@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="64" height="64">
+  <!-- Dark circular background -->
+  <circle cx="50" cy="50" r="48" fill="#0a1f15" stroke="#50c878" stroke-width="2"/>
+  
+  <!-- Emerald dragon head silhouette -->
+  <path d="M50 20 
+           L60 25 L65 22 L62 30
+           Q70 32 72 40
+           Q75 48 72 55
+           Q68 65 60 70
+           Q55 73 50 75
+           Q45 73 40 70
+           Q32 65 28 55
+           Q25 48 28 40
+           Q30 32 38 30
+           L35 22 L40 25
+           Z" 
+        fill="#50c878"/>
+  
+  
+  <!-- Eye sockets (dark) -->
+  <ellipse cx="38" cy="42" rx="5" ry="7" fill="#0a1f15"/>
+  <ellipse cx="62" cy="42" rx="5" ry="7" fill="#0a1f15"/>
+  
+  <!-- Eyes (gold) -->
+  <circle cx="38" cy="44" r="3" fill="#ffd700"/>
+  <circle cx="62" cy="44" r="3" fill="#ffd700"/>
+  
+  <!-- Nose -->
+  <path d="M47 58 L50 55 L53 58 L50 62 Z" fill="#0a1f15"/>
+  
+  <!-- Mouth -->
+  <path d="M43 68 Q50 64 57 68" stroke="#0a1f15" stroke-width="2" fill="none"/>
+</svg>
