@@ -508,6 +508,92 @@ section {
     font-size: 1.1rem;
 }
 
+/* Roster / Bulletin Section */
+.bulletin {
+    background: var(--bg-secondary);
+}
+
+.roster-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.roster-column h3 {
+    font-family: 'Cinzel', serif;
+    color: var(--emerald);
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.roster-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 1rem;
+}
+
+.member-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 0.5rem;
+    background: var(--bg-card);
+    border-radius: 12px;
+    border: 1px solid var(--emerald-dark);
+    transition: all 0.3s;
+    text-align: center;
+}
+
+.member-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(80, 200, 120, 0.2);
+}
+
+.member-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2px solid var(--emerald);
+}
+
+.member-name {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    font-weight: 600;
+    word-break: break-word;
+}
+
+/* Live Data States */
+.loading, .empty, .error {
+    color: var(--text-secondary);
+    text-align: center;
+    padding: 1rem;
+    font-style: italic;
+}
+
+.error {
+    color: #e57373;
+}
+
+.status.locked {
+    background: rgba(255, 152, 0, 0.2);
+    color: #ffb74d;
+}
+
+.no-raids {
+    grid-column: 1 / -1;
+    text-align: center;
+}
+
+.raid-card.ascnd::before { background: #9c27b0; }
+
+.raid-party {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
 /* Footer */
 .footer {
     background: var(--bg-primary);

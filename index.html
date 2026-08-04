@@ -18,6 +18,7 @@
             <li><a href="#home">Home</a></li>
             <li><a href="#raids">Raids</a></li>
             <li><a href="#stats">Stats</a></li>
+            <li><a href="#roster">Roster</a></li>
             <li><a href="#join">Join Us</a></li>
         </ul>
     </nav>
@@ -31,15 +32,15 @@
             <p class="hero-tagline">End-Game Focus • Team Play • Clean Progression</p>
             <div class="hero-stats">
                 <div class="stat">
-                    <span class="stat-number">500+</span>
+                    <span class="stat-number" id="hero-total-raids">—</span>
                     <span class="stat-label">Raids Completed</span>
                 </div>
                 <div class="stat">
-                    <span class="stat-number">100+</span>
-                    <span class="stat-label">Active Members</span>
+                    <span class="stat-number" id="hero-members">—</span>
+                    <span class="stat-label">Community Members</span>
                 </div>
                 <div class="stat">
-                    <span class="stat-number">95%</span>
+                    <span class="stat-number" id="hero-success-rate">—</span>
                     <span class="stat-label">Success Rate</span>
                 </div>
             </div>
@@ -55,58 +56,9 @@
             <p>Current lineups looking for brave adventurers</p>
         </div>
         
-        <div class="raids-grid">
-            <div class="raid-card colo">
-                <div class="raid-header">
-                    <span class="raid-icon">🕋</span>
-                    <span class="raid-type">COLO</span>
-                    <span class="raid-number">#228</span>
-                </div>
-                <div class="raid-status">
-                    <span class="slots">7/10 filled</span>
-                    <span class="status open">OPEN</span>
-                </div>
-                <div class="raid-progress">
-                    <div class="progress-bar" style="width: 70%"></div>
-                </div>
-                <a href="#" class="join-raid-btn">Join Raid</a>
-            </div>
-
-            <div class="raid-card t4">
-                <div class="raid-header">
-                    <span class="raid-icon">⚔️</span>
-                    <span class="raid-type">T4NM</span>
-                    <span class="raid-number">#145</span>
-                </div>
-                <div class="raid-status">
-                    <span class="slots">4/10 filled</span>
-                    <span class="status open">OPEN</span>
-                </div>
-                <div class="raid-progress">
-                    <div class="progress-bar" style="width: 40%"></div>
-                </div>
-                <a href="#" class="join-raid-btn">Join Raid</a>
-            </div>
-
-            <div class="raid-card sr">
-                <div class="raid-header">
-                    <span class="raid-icon">🔐</span>
-                    <span class="raid-type">SR</span>
-                    <span class="raid-number">#67</span>
-                </div>
-                <div class="raid-info">
-                    <span class="raid-date">📅 March 20, 2026</span>
-                    <span class="raid-time">🕐 9:00 PM UTC+8</span>
-                </div>
-                <div class="raid-status">
-                    <span class="slots">3/10 filled</span>
-                    <span class="status open">OPEN</span>
-                </div>
-                <div class="raid-progress">
-                    <div class="progress-bar" style="width: 30%"></div>
-                </div>
-                <div class="countdown">Starts in: 5 days</div>
-                <a href="#" class="join-raid-btn">Join Raid</a>
+        <div class="raids-grid" id="raids-container">
+            <div class="raid-card no-raids">
+                <p id="raids-loading">Loading active raids...</p>
             </div>
         </div>
     </section>
@@ -115,76 +67,51 @@
     <section id="stats" class="stats">
         <div class="section-header">
             <h2>📊 Guild Statistics</h2>
-            <p>This month's achievements</p>
+            <p>Our achievements so far</p>
         </div>
 
         <div class="stats-container">
             <div class="stat-card">
-                <h3>Top Raiders</h3>
-                <ul class="leaderboard">
-                    <li>
-                        <span class="rank">1</span>
-                        <span class="name">Fade</span>
-                        <span class="score">47 raids</span>
-                    </li>
-                    <li>
-                        <span class="rank">2</span>
-                        <span class="name">Misfit</span>
-                        <span class="score">42 raids</span>
-                    </li>
-                    <li>
-                        <span class="rank">3</span>
-                        <span class="name">Creamzzz</span>
-                        <span class="score">38 raids</span>
-                    </li>
+                <h3>🏆 Top Raiders</h3>
+                <ul class="leaderboard" id="top-raiders">
+                    <li class="loading">Loading...</li>
                 </ul>
             </div>
 
             <div class="stat-card">
                 <h3>Raid Breakdown</h3>
-                <div class="breakdown">
-                    <div class="breakdown-item">
-                        <span class="breakdown-icon">🕋</span>
-                        <span class="breakdown-label">COLO</span>
-                        <span class="breakdown-value">156</span>
-                    </div>
-                    <div class="breakdown-item">
-                        <span class="breakdown-icon">⚔️</span>
-                        <span class="breakdown-label">T4NM</span>
-                        <span class="breakdown-value">89</span>
-                    </div>
-                    <div class="breakdown-item">
-                        <span class="breakdown-icon">🔐</span>
-                        <span class="breakdown-label">SR</span>
-                        <span class="breakdown-value">45</span>
-                    </div>
-                    <div class="breakdown-item">
-                        <span class="breakdown-icon">🗝️</span>
-                        <span class="breakdown-label">TT</span>
-                        <span class="breakdown-value">32</span>
-                    </div>
+                <div class="breakdown" id="raid-breakdown">
+                    <div class="breakdown-item loading">Loading...</div>
                 </div>
             </div>
 
             <div class="stat-card">
-                <h3>MVP Standings</h3>
-                <ul class="leaderboard">
-                    <li>
-                        <span class="rank crown">👑</span>
-                        <span class="name">BooJs</span>
-                        <span class="score">12 MVPs</span>
-                    </li>
-                    <li>
-                        <span class="rank">2</span>
-                        <span class="name">Sycos</span>
-                        <span class="score">9 MVPs</span>
-                    </li>
-                    <li>
-                        <span class="rank">3</span>
-                        <span class="name">Tads</span>
-                        <span class="score">7 MVPs</span>
-                    </li>
-                </ul>
+                <h3>📋 Raid Types</h3>
+                <div class="breakdown" id="raid-types">
+                    <div class="breakdown-item loading">Loading...</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roster Section -->
+    <section id="roster" class="bulletin">
+        <div class="section-header">
+            <h2>📋 Guild Roster</h2>
+            <p>Leadership &amp; Raid Leaders</p>
+        </div>
+        <div class="roster-container">
+            <div class="roster-column">
+                <h3>👑 Guild Admins</h3>
+                <div class="roster-grid" id="admins-list">
+                    <p class="loading">Loading...</p>
+                </div>
+            </div>
+            <div class="roster-column">
+                <h3>⚔️ Raid Leaders</h3>
+                <div class="roster-grid" id="raid-leaders-list">
+                    <p class="loading">Loading...</p>
+                </div>
             </div>
         </div>
     </section>
@@ -198,7 +125,7 @@
             <div class="requirements">
                 <h3>Requirements</h3>
                 <ul>
-                    <li>✅ End-game level (140+)</li>
+                    <li>✅ End-game level (350+)</li>
                     <li>✅ Active participation in raids</li>
                     <li>✅ Team player mentality</li>
                     <li>✅ Discord activity</li>
@@ -214,7 +141,7 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
-            <p>🐉 Dauntless Guild | Flyff Universe</p>
+            <p>🐉 Dauntless Guild</p>
             <p class="footer-tagline">"Where legends are forged"</p>
         </div>
     </footer>
