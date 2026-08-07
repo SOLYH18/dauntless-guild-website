@@ -2,7 +2,7 @@
 // ============================================================
 // CONFIG: Change this to your bot's Railway URL after deploy
 // ============================================================
-const API_BASE = 'https://dauntless-bot.up.railway.app';
+const API_BASE = 'https://dauntless-flyff-bot-production.up.railway.app';
 
 // ==================== API HELPERS ====================
 
