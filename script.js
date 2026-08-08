@@ -55,20 +55,22 @@ async function loadHeroStats() {
 
 const RAID_ICONS = {
     'colo': '🕋', 'colo-3': '🕋', 'colo-5': '🕋', 'colo-7': '🕋', 'colo-10': '🕋',
-    't4': '⚔️', 'sr': '🔐', 'tt': '🗝️', 'ascnd': '⬆️'
-};
-
-const RAID_NAMES = {
-    't4': 'T4NM', 'sr': 'SR', 'tt': 'TT', 'ascnd': 'Ascended'
+    't4': '⚔️', 'sr': '🔐', 'tt': '🗝️', 'torment': '🗝️', 'ascnd': '⬆️'
 };
 
 function getRaidDisplayName(raidName) {
     if (!raidName) return 'Unknown';
-    const lower = raidName.toLowerCase();
-    for (const [key, display] of Object.entries(RAID_NAMES)) {
-        if (lower.includes(key)) return display;
+    // Raid names are like "⚔・dntl-t4・r2193" — strip emoji prefix and round suffix
+    const cleaned = raidName.replace(/^[^\w]+/, ''); // remove leading emoji + separator
+    const parts = cleaned.split('・');
+    // Return middle part (lineup name) if available, otherwise full cleaned name
+    if (parts.length >= 2) {
+        const last = parts[parts.length - 1];
+        // Remove round suffix if present (・r123, r123)
+        const withoutRound = parts.slice(0, -1).join('・');
+        return /^r\d+$/i.test(last) ? withoutRound : cleaned;
     }
-    return raidName;
+    return cleaned;
 }
 
 function getRaidIcon(raidName) {
@@ -86,7 +88,7 @@ function getRaidTypeClass(raidName) {
     if (lower.includes('colo')) return 'colo';
     if (lower.includes('t4')) return 't4';
     if (lower.includes('sr')) return 'sr';
-    if (lower.includes('tt')) return 'tt';
+    if (lower.includes('tt') || lower.includes('torment')) return 'tt';
     if (lower.includes('ascnd') || lower.includes('ascended')) return 'ascnd';
     return '';
 }
