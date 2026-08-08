@@ -666,6 +666,59 @@ section {
     word-break: break-word;
 }
 
+/* Clover Info Section */
+.clover-info {
+    background: var(--bg-secondary);
+}
+
+.clover-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+}
+
+.clover-feature {
+    background: var(--bg-card);
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 1px solid var(--emerald-dark);
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.clover-feature:hover {
+    border-color: var(--emerald);
+    box-shadow: 0 4px 20px rgba(80, 200, 120, 0.2);
+    transform: translateY(-3px);
+}
+
+.clover-icon-large {
+    font-size: 2.2rem;
+    display: block;
+    margin-bottom: 0.75rem;
+}
+
+.clover-feature h4 {
+    font-family: 'Cinzel', serif;
+    color: var(--emerald-light);
+    margin-bottom: 0.5rem;
+    font-size: 1.05rem;
+}
+
+.clover-feature p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.clover-feature code {
+    background: rgba(80, 200, 120, 0.15);
+    color: var(--emerald-light);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
 /* Live Data States */
 .loading, .empty, .error {
     color: var(--text-secondary);
