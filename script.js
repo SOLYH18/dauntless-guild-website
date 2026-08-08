@@ -189,7 +189,8 @@ async function loadStats() {
         { icon: '🕋', label: 'COLO', value: stats.breakdown.colo },
         { icon: '⚔️', label: 'T4NM', value: stats.breakdown.t4 },
         { icon: '🔐', label: 'SR', value: stats.breakdown.sr },
-        { icon: '🗝️', label: 'TT', value: stats.breakdown.tt }
+        { icon: '🗝️', label: 'TT', value: stats.breakdown.tt },
+        { icon: '⬆️', label: 'ASCND', value: stats.breakdown.ascnd }
     ];
     breakdown.innerHTML = breaks.map(b => `
         <div class="breakdown-item">
