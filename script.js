@@ -313,3 +313,80 @@ async function init() {
 // Refresh every 5 minutes
 init();
 setInterval(init, 5 * 60 * 1000);
+
+// ==================== EMERALD GLITTER PARTICLES ====================
+
+(function() {
+    const canvas = document.getElementById('glitter-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    let particles = [];
+    const MAX = 60;
+
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    function createParticle() {
+        return {
+            x: Math.random() * canvas.width,
+            y: Math.random() * -canvas.height,
+            size: Math.random() * 3 + 1,
+            speedY: Math.random() * 1.5 + 0.5,
+            speedX: (Math.random() - 0.5) * 0.5,
+            opacity: Math.random() * 0.6 + 0.2,
+            pulse: Math.random() * Math.PI * 2,
+            color: Math.random() < 0.3 ? '#ffd700' : '#50c878'
+        };
+    }
+
+    // Pre-fill
+    for (let i = 0; i < MAX; i++) {
+        const p = createParticle();
+        p.y = Math.random() * canvas.height;
+        particles.push(p);
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        for (let i = 0; i < particles.length; i++) {
+            const p = particles[i];
+            p.y += p.speedY;
+            p.x += p.speedX + Math.sin(p.pulse + performance.now() * 0.001) * 0.3;
+            p.opacity = 0.2 + Math.sin(p.pulse + performance.now() * 0.002) * 0.15;
+
+            if (p.y > canvas.height + 10) {
+                p.y = -10;
+                p.x = Math.random() * canvas.width;
+            }
+            if (p.x < -10) p.x = canvas.width + 10;
+            if (p.x > canvas.width + 10) p.x = -10;
+
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fillStyle = p.color;
+            ctx.globalAlpha = p.opacity;
+            ctx.fill();
+
+            // Glow
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size * 2.5, 0, Math.PI * 2);
+            ctx.fillStyle = p.color;
+            ctx.globalAlpha = p.opacity * 0.15;
+            ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+
+        // Maintain count
+        while (particles.length < MAX) particles.push(createParticle());
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+})();
