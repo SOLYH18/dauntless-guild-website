@@ -322,7 +322,7 @@ setInterval(init, 5 * 60 * 1000);
     const ctx = canvas.getContext('2d');
 
     let particles = [];
-    const MAX = 60;
+    const MAX = 80;
 
     function resize() {
         canvas.width = window.innerWidth;
@@ -335,10 +335,10 @@ setInterval(init, 5 * 60 * 1000);
         return {
             x: Math.random() * canvas.width,
             y: Math.random() * -canvas.height,
-            size: Math.random() * 3 + 1,
-            speedY: Math.random() * 1.5 + 0.5,
-            speedX: (Math.random() - 0.5) * 0.5,
-            opacity: Math.random() * 0.6 + 0.2,
+            size: Math.random() * 4 + 2,
+            speedY: Math.random() * 1 + 0.3,
+            speedX: (Math.random() - 0.5) * 0.8,
+            opacity: Math.random() * 0.5 + 0.3,
             pulse: Math.random() * Math.PI * 2,
             color: Math.random() < 0.3 ? '#ffd700' : '#50c878'
         };
@@ -375,9 +375,9 @@ setInterval(init, 5 * 60 * 1000);
 
             // Glow
             ctx.beginPath();
-            ctx.arc(p.x, p.y, p.size * 2.5, 0, Math.PI * 2);
+            ctx.arc(p.x, p.y, p.size * 3, 0, Math.PI * 2);
             ctx.fillStyle = p.color;
-            ctx.globalAlpha = p.opacity * 0.15;
+            ctx.globalAlpha = p.opacity * 0.2;
             ctx.fill();
         }
         ctx.globalAlpha = 1;
