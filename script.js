@@ -178,7 +178,7 @@ async function loadStats() {
         topList.innerHTML = stats.topRaiders.map((r, i) => `
             <li>
                 <span class="rank${i === 0 ? ' crown' : ''}">${i === 0 ? '👑' : i + 1}</span>
-                <span class="name">${escapeHTML(r.ign)}</span>
+                <span class="name">${escapeHTML(r.username ? '@' + r.username : r.ign)}</span>
                 <span class="score">${r.count} raids</span>
             </li>`).join('');
     } else {
