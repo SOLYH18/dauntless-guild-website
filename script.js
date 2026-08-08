@@ -100,7 +100,7 @@ function getMaxSlots(teamSize) {
 
 function getRaidRound(raidName) {
     if (!raidName) return '';
-    const match = raidName.match(/[rＲ](\\d+)/i);
+    const match = raidName.match(/[rＲ](\d+)/i);
     return match ? `#${match[1]}` : '';
 }
 
