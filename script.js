@@ -217,6 +217,25 @@ async function loadStats() {
         </div>`;
 }
 
+// ==================== CLOVER LEADERBOARD ====================
+
+async function loadClovers() {
+    const leaders = await fetchAPI('/api/clovers');
+    const list = document.getElementById('clover-leaders');
+    if (!leaders || leaders.length === 0) {
+        list.innerHTML = '<li class="empty">No clovers earned yet</li>';
+        return;
+    }
+    list.innerHTML = leaders.map((c, i) => `
+        <li>
+            <span class="rank${i === 0 ? ' crown' : ''}">${i === 0 ? '👑' : i + 1}</span>
+            ${c.avatarUrl ? `<img src="${escapeHTML(c.avatarUrl)}" alt="" class="raider-avatar" loading="lazy">` : ''}
+            <span class="name">${escapeHTML(c.displayName || c.username)}</span>
+            <span class="score clovers">${c.clovers}🍀</span>
+            ${c.streak > 0 ? `<span class="streak" title="${c.streak}-day streak">🔥${c.streak}</span>` : ''}
+        </li>`).join('');
+}
+
 // ==================== ROSTER ====================
 
 async function loadRoster() {
@@ -308,6 +327,7 @@ async function init() {
         loadHeroStats(),
         loadActiveRaids(),
         loadStats(),
+        loadClovers(),
         loadRoster()
     ]);
     observeCards();
