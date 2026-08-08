@@ -272,9 +272,9 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 window.addEventListener('scroll', () => {
     const navbar = document.querySelector('.navbar');
     if (window.scrollY > 50) {
-        navbar.style.background = 'rgba(13, 59, 30, 0.98)';
+        navbar.classList.add('scrolled');
     } else {
-        navbar.style.background = 'rgba(13, 59, 30, 0.95)';
+        navbar.classList.remove('scrolled');
     }
 });
 

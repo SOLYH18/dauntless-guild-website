@@ -25,6 +25,23 @@ body {
     color: var(--text-primary);
     line-height: 1.6;
     overflow-x: hidden;
+    background-image: 
+        radial-gradient(ellipse at 20% 20%, rgba(80, 200, 120, 0.03) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(78, 205, 196, 0.03) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(255, 215, 0, 0.02) 0%, transparent 70%);
+}
+
+/* Subtle grid overlay */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: 
+        linear-gradient(rgba(80, 200, 120, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(80, 200, 120, 0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
 }
 
 /* Navigation */
@@ -33,13 +50,21 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 1rem 5%;
-    background: rgba(13, 59, 30, 0.95);
-    backdrop-filter: blur(10px);
+    background: rgba(13, 59, 30, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     position: fixed;
     width: 100%;
     top: 0;
     z-index: 1000;
     border-bottom: 2px solid var(--emerald-dark);
+    transition: all 0.3s;
+}
+
+.navbar.scrolled {
+    background: rgba(10, 31, 21, 0.97);
+    border-bottom-color: var(--emerald);
+    box-shadow: 0 4px 30px rgba(80, 200, 120, 0.1);
 }
 
 .nav-brand {
@@ -59,6 +84,19 @@ body {
     font-weight: 700;
     color: var(--emerald);
     text-shadow: 0 0 20px var(--emerald-dark);
+}
+
+.mmorpg-tag {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: var(--gold);
+    background: rgba(255, 215, 0, 0.1);
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    vertical-align: middle;
+    letter-spacing: 0.1em;
 }
 
 .nav-links {
@@ -128,12 +166,12 @@ body {
     font-size: 8rem;
     margin-bottom: -1rem;
     filter: drop-shadow(0 0 30px var(--emerald));
-    animation: float 3s ease-in-out infinite;
+    animation: floatPulse 3s ease-in-out infinite;
 }
 
-@keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+@keyframes floatPulse {
+    0%, 100% { transform: translateY(0); filter: drop-shadow(0 0 30px var(--emerald)); }
+    50% { transform: translateY(-10px); filter: drop-shadow(0 0 50px var(--emerald-light)); }
 }
 
 .hero-title {
@@ -190,7 +228,8 @@ body {
 .cta-button {
     display: inline-block;
     padding: 1rem 2.5rem;
-    background: linear-gradient(135deg, var(--emerald) 0%, var(--emerald-dark) 100%);
+    background: linear-gradient(135deg, var(--emerald) 0%, var(--emerald-dark) 50%, var(--emerald) 100%);
+    background-size: 200% 200%;
     color: var(--bg-primary);
     text-decoration: none;
     font-weight: 600;
@@ -198,11 +237,17 @@ body {
     transition: all 0.3s;
     box-shadow: 0 4px 15px rgba(80, 200, 120, 0.3);
     border: 2px solid transparent;
+    animation: gradientShift 3s ease infinite;
+}
+
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
 }
 
 .cta-button:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(80, 200, 120, 0.5);
+    box-shadow: 0 8px 30px rgba(80, 200, 120, 0.5), 0 0 60px rgba(80, 200, 120, 0.1);
     border-color: var(--emerald-light);
 }
 
@@ -221,6 +266,21 @@ section {
     font-size: 2.5rem;
     color: var(--emerald);
     margin-bottom: 0.5rem;
+    text-shadow: 0 0 30px rgba(80, 200, 120, 0.3);
+    position: relative;
+    display: inline-block;
+}
+
+.section-header h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--emerald), transparent);
+    border-radius: 2px;
 }
 
 .section-header p {
@@ -380,6 +440,28 @@ section {
     border-radius: 15px;
     padding: 1.5rem;
     border: 1px solid var(--emerald-dark);
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--emerald), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.stat-card:hover {
+    border-color: var(--emerald);
+    box-shadow: 0 0 30px rgba(80, 200, 120, 0.15);
+}
+
+.stat-card:hover::before {
+    opacity: 1;
 }
 
 .stat-card h3 {
@@ -548,7 +630,8 @@ section {
 
 .member-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 4px 15px rgba(80, 200, 120, 0.2);
+    box-shadow: 0 4px 20px rgba(80, 200, 120, 0.25);
+    border-color: var(--emerald);
 }
 
 .member-avatar {
