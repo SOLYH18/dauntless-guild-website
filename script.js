@@ -504,7 +504,8 @@ const GALLERY_CHANNELS = {
     '1487104672333566172': { name: 'T4', emoji: '⚔️' },
     '1487104672614322311': { name: 'COLO', emoji: '🕋' },
     '1520222453001883659': { name: 'ASCND', emoji: '⬆️' },
-    '1487104673143066810': { name: 'TT', emoji: '🗝️' }
+    '1487104673143066810': { name: 'TT', emoji: '🗝️' },
+    '1491642076331507781': { name: 'Fit Check', emoji: '👗' }
 };
 
 async function loadGallery(channelId) {
