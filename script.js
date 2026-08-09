@@ -201,22 +201,9 @@ async function loadStats() {
             <span class="breakdown-label">${b.label}</span>
             <span class="breakdown-value">${b.value || 0}</span>
         </div>`).join('');
-
-    // Raid Types (total + breakdown summary)
-    const typeBreakdown = document.getElementById('raid-types');
-    typeBreakdown.innerHTML = `
-        <div class="breakdown-item">
-            <span class="breakdown-icon">📊</span>
-            <span class="breakdown-label">Total Raids</span>
-            <span class="breakdown-value">${stats.totalRaids || 0}</span>
-        </div>
-        <div class="breakdown-item">
-            <span class="breakdown-icon">✅</span>
-            <span class="breakdown-label">Success Rate</span>
-            <span class="breakdown-value">${stats.successRate || 0}%</span>
-        </div>`;
 }
 
+// Load all live data
 // ==================== CLOVER LEADERBOARD ====================
 
 async function loadClovers() {
