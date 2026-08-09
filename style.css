@@ -1165,16 +1165,39 @@ section {
 @media (max-width: 768px) {
     .navbar {
         flex-direction: column;
-        padding: 0.5rem;
+        padding: 0.4rem 3%;
+        gap: 0.3rem;
     }
-    
+
+    .nav-brand {
+        gap: 0.3rem;
+    }
+
+    .guild-name {
+        font-size: 1.1rem;
+    }
+
+    .dragon-logo {
+        width: 26px;
+        height: 26px;
+    }
+
     .nav-links {
-        gap: 1rem;
-        margin-top: 0.5rem;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .nav-links a {
+        font-size: 0.7rem;
     }
     
     .hero-title {
-        font-size: 3rem;
+        font-size: 2.5rem;
+    }
+
+    .hero {
+        padding-top: 7rem;
     }
     
     .hero-stats {
