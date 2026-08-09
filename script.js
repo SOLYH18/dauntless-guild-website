@@ -415,8 +415,8 @@ function renderMonth(idx) {
         </div>
     `).join('');
 
-    // Re-observe for scroll animation
-    observeCards();
+    // Re-observe for scroll animation if switching months after init
+    setTimeout(observeCards, 100);
 }
 
 // ==================== LIGHTBOX ====================
@@ -506,7 +506,7 @@ function renderRaidCount(idx) {
             </div>
         </div>`;
 
-    observeCards();
+    setTimeout(observeCards, 100);
 }
 
 // Load all live data
