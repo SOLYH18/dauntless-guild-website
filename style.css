@@ -656,23 +656,59 @@ section {
     background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
 }
 
-.hof-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-    gap: 2rem;
+.hof-selector {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
 }
 
-.hof-month {
+.hof-month-btn {
+    font-family: 'Cinzel', serif;
+    padding: 0.6rem 1.25rem;
+    background: transparent;
+    border: 1px solid var(--emerald-dark);
+    color: var(--text-secondary);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+}
+
+.hof-month-btn:hover {
+    border-color: var(--emerald);
+    color: var(--emerald-light);
+}
+
+.hof-month-btn.active {
+    background: var(--emerald);
+    border-color: var(--emerald);
+    color: var(--bg-primary);
+    font-weight: 700;
+    box-shadow: 0 0 20px rgba(80, 200, 120, 0.3);
+}
+
+.hof-display {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.hof-award-card {
     background: var(--bg-card);
     border-radius: 15px;
     padding: 1.5rem;
     border: 1px solid var(--emerald-dark);
     transition: all 0.3s;
+    text-align: center;
     position: relative;
     overflow: hidden;
 }
 
-.hof-month::before {
+.hof-award-card::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
@@ -680,82 +716,88 @@ section {
     background: linear-gradient(90deg, var(--gold), var(--emerald));
 }
 
-.hof-month:hover {
+.hof-award-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 30px rgba(80, 200, 120, 0.2);
     border-color: var(--emerald);
 }
 
-.hof-month-header {
-    font-family: 'Cinzel', serif;
-    color: var(--gold);
-    font-size: 1.3rem;
-    text-align: center;
-    margin-bottom: 1.25rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 1px solid rgba(255, 215, 0, 0.2);
-}
-
-.hof-awards {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.hof-award {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.75rem;
-    background: rgba(80, 200, 120, 0.05);
-    border-radius: 10px;
-    transition: all 0.3s;
-    cursor: pointer;
-    text-decoration: none;
-}
-
-.hof-award:hover {
-    background: rgba(80, 200, 120, 0.12);
-}
-
 .hof-award-avatar {
-    width: 44px;
-    height: 44px;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
-    border: 2px solid var(--emerald-dark);
-    flex-shrink: 0;
-}
-
-.hof-award-info {
-    flex: 1;
-    min-width: 0;
+    border: 2px solid var(--emerald);
+    margin-bottom: 0.5rem;
 }
 
 .hof-award-label {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     color: var(--text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
 }
 
 .hof-award-name {
+    font-family: 'Cinzel', serif;
     font-weight: 700;
     color: var(--emerald-light);
-    font-size: 1rem;
+    font-size: 1.15rem;
+    margin-bottom: 1rem;
 }
 
-.hof-award-image {
-    width: 60px;
-    height: 60px;
-    border-radius: 8px;
-    object-fit: cover;
-    flex-shrink: 0;
+.hof-stat-image {
+    width: 100%;
+    max-width: 260px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
     border: 1px solid var(--emerald-dark);
-    transition: transform 0.3s;
 }
 
-.hof-award:hover .hof-award-image {
-    transform: scale(1.15);
+.hof-stat-image:hover {
+    transform: scale(1.04);
+    box-shadow: 0 4px 20px rgba(80, 200, 120, 0.3);
+    border-color: var(--emerald);
+}
+
+/* Lightbox */
+.lightbox {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.92);
+    z-index: 10000;
+    justify-content: center;
+    align-items: center;
+    cursor: zoom-out;
+}
+
+.lightbox.active {
+    display: flex;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 2rem;
+    font-size: 2.5rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    z-index: 10001;
+    transition: color 0.3s;
+}
+
+.lightbox-close:hover {
+    color: var(--emerald-light);
+}
+
+.lightbox-image {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 12px;
+    cursor: default;
 }
 
 /* Join Section */

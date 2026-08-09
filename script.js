@@ -313,7 +313,7 @@ const observer = new IntersectionObserver((entries) => {
 }, observerOptions);
 
 function observeCards() {
-    document.querySelectorAll('.stat-card, .raid-card, .member-card, .hof-month').forEach(el => {
+    document.querySelectorAll('.stat-card, .raid-card, .member-card, .hof-award-card').forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(20px)';
         el.style.transition = 'all 0.6s ease-out';
@@ -323,43 +323,78 @@ function observeCards() {
 
 // ==================== HALL OF FAME ====================
 
+let hofData = [];
+
 async function loadHallOfFame() {
-    const container = document.getElementById('hof-container');
-    if (!container) return;
+    const container = document.getElementById('hof-display');
+    const selector = document.getElementById('hof-selector');
+    if (!container || !selector) return;
 
     try {
         const res = await fetch('hall-of-fame.json');
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const months = await res.json();
+        hofData = await res.json();
 
-        if (!months || months.length === 0) {
+        if (!hofData || hofData.length === 0) {
             container.innerHTML = '<p class="empty">No Hall of Fame data yet</p>';
             return;
         }
 
-        container.innerHTML = months.map(month => `
-            <div class="hof-month">
-                <div class="hof-month-header">${escapeHTML(month.month)}</div>
-                <div class="hof-awards">
-                    ${month.awards.map(a => `
-                        <a class="hof-award" href="${escapeHTML(a.image_url || '#')}" target="_blank" rel="noopener" title="View award card">
-                            <img src="${escapeHTML(a.avatarUrl)}" alt="${escapeHTML(a.displayName)}" class="hof-award-avatar" loading="lazy">
-                            <div class="hof-award-info">
-                                <div class="hof-award-label">${a.award}</div>
-                                <div class="hof-award-name">${escapeHTML(a.displayName)}</div>
-                            </div>
-                            ${a.image_url ? `<img src="${escapeHTML(a.image_url)}" alt="Award card" class="hof-award-image" loading="lazy">` : ''}
-                        </a>
-                    `).join('')}
-                </div>
-            </div>
-        `).join('');
+        // Build month selector buttons
+        selector.innerHTML = hofData.map((m, i) =>
+            `<button class="hof-month-btn${i === 0 ? ' active' : ''}" data-idx="${i}">${escapeHTML(m.month)}</button>`
+        ).join('');
+
+        selector.querySelectorAll('.hof-month-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                selector.querySelectorAll('.hof-month-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderMonth(parseInt(btn.dataset.idx));
+            });
+        });
+
+        // Show latest month
+        renderMonth(0);
 
     } catch (err) {
         console.error('Hall of Fame load error:', err);
         container.innerHTML = '<p class="error">⚠️ Could not load Hall of Fame</p>';
     }
 }
+
+function renderMonth(idx) {
+    const container = document.getElementById('hof-display');
+    const month = hofData[idx];
+    if (!month) return;
+
+    container.innerHTML = month.awards.map(a => `
+        <div class="hof-award-card">
+            <img src="${escapeHTML(a.avatarUrl)}" alt="${escapeHTML(a.displayName)}" class="hof-award-avatar" loading="lazy">
+            <div class="hof-award-label">${a.award}</div>
+            <div class="hof-award-name">${escapeHTML(a.displayName)}</div>
+            ${a.image_url ? `<img src="${escapeHTML(a.image_url)}" alt="Award card" class="hof-stat-image" loading="lazy" onclick="openLightbox('${escapeHTML(a.image_url)}')">` : ''}
+        </div>
+    `).join('');
+
+    // Re-observe for scroll animation
+    observeCards();
+}
+
+// ==================== LIGHTBOX ====================
+
+function openLightbox(src) {
+    const lb = document.getElementById('lightbox');
+    const img = document.getElementById('lightbox-img');
+    img.src = src;
+    lb.classList.add('active');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const lb = document.getElementById('lightbox');
+    if (lb) {
+        lb.addEventListener('click', () => lb.classList.remove('active'));
+    }
+});
 
 // Load all live data
 async function init() {
