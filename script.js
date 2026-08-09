@@ -331,7 +331,7 @@ async function loadHallOfFame() {
     if (!container || !selector) return;
 
     try {
-        const res = await fetch('hall-of-fame.json');
+        const res = await fetch('hall-of-fame-data.json');
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         hofData = await res.json();
 
