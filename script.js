@@ -300,7 +300,7 @@ const observer = new IntersectionObserver((entries) => {
 }, observerOptions);
 
 function observeCards() {
-    document.querySelectorAll('.stat-card, .raid-card, .member-card, .hof-award-card, .rc-card').forEach(el => {
+    document.querySelectorAll('.stat-card, .raid-card, .member-card, .hof-award-card, .rc-card, .gallery-card').forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(20px)';
         el.style.transition = 'all 0.6s ease-out';
@@ -496,6 +496,63 @@ function renderRaidCount(idx) {
     setTimeout(observeCards, 100);
 }
 
+// ==================== GALLERY ====================
+
+let currentGalleryChannel = '';
+const GALLERY_CHANNELS = {
+    '': { name: 'All', emoji: '📷' },
+    '1487104672333566172': { name: 'T4', emoji: '⚔️' },
+    '1487104672614322311': { name: 'COLO', emoji: '🕋' },
+    '1520222453001883659': { name: 'ASCND', emoji: '⬆️' },
+    '1487104673143066810': { name: 'TT', emoji: '🗝️' }
+};
+
+async function loadGallery(channelId) {
+    const grid = document.getElementById('gallery-grid');
+    if (!grid) return;
+
+    grid.innerHTML = '<p class="loading">Loading gallery...</p>';
+
+    const params = channelId ? `?channel=${channelId}&limit=24` : '?limit=24';
+    const data = await fetchAPI(`/api/gallery${params}`);
+
+    if (!data || !data.images || data.images.length === 0) {
+        grid.innerHTML = '<p class="gallery-empty">No images found yet. Post your run party photos in the history channels!</p>';
+        return;
+    }
+
+    grid.innerHTML = data.images.map(img => `
+        <div class="gallery-card" onclick="window.open('${escapeHTML(img.messageUrl)}', '_blank')">
+            <img src="${escapeHTML(img.imageUrl)}" alt="Run party photo" class="gallery-card-image" loading="lazy">
+            <div class="gallery-card-info">
+                ${img.author && img.author.avatarUrl ? `<img src="${escapeHTML(img.author.avatarUrl)}" alt="" class="gallery-card-avatar" loading="lazy">` : ''}
+                <span class="gallery-card-author">${escapeHTML(img.author ? (img.author.displayName || img.author.username) : 'Unknown')}</span>
+                <span class="gallery-card-channel">${img.channelEmoji || ''} ${img.channelName}</span>
+            </div>
+        </div>
+    `).join('');
+
+    // Re-observe new cards
+    setTimeout(observeCards, 100);
+}
+
+function setupGalleryFilters() {
+    const filterContainer = document.getElementById('gallery-filters');
+    if (!filterContainer) return;
+
+    filterContainer.querySelectorAll('.gallery-filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterContainer.querySelectorAll('.gallery-filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentGalleryChannel = btn.dataset.channel || '';
+            loadGallery(currentGalleryChannel);
+        });
+    });
+
+    // Load initial (all)
+    loadGallery('');
+}
+
 // Load all live data
 async function init() {
     await Promise.all([
@@ -508,6 +565,7 @@ async function init() {
         loadRaidCounts()
     ]);
     observeCards();
+    setupGalleryFilters();
     console.log('🐉 Dauntless Guild Website - Live data loaded');
 }
 
