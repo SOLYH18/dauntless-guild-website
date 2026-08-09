@@ -532,8 +532,7 @@ async function loadGallery(channelId) {
         </div>
     `).join('');
 
-    // Re-observe new cards
-    setTimeout(observeCards, 100);
+    // Cards visible immediately — no scroll animation for gallery
 }
 
 function setupGalleryFilters() {
