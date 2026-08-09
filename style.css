@@ -651,6 +651,113 @@ section {
     color: var(--emerald-light);
 }
 
+/* Hall of Fame Section */
+.hall-of-fame {
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+}
+
+.hof-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 2rem;
+}
+
+.hof-month {
+    background: var(--bg-card);
+    border-radius: 15px;
+    padding: 1.5rem;
+    border: 1px solid var(--emerald-dark);
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.hof-month::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--emerald));
+}
+
+.hof-month:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(80, 200, 120, 0.2);
+    border-color: var(--emerald);
+}
+
+.hof-month-header {
+    font-family: 'Cinzel', serif;
+    color: var(--gold);
+    font-size: 1.3rem;
+    text-align: center;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.hof-awards {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.hof-award {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    background: rgba(80, 200, 120, 0.05);
+    border-radius: 10px;
+    transition: all 0.3s;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.hof-award:hover {
+    background: rgba(80, 200, 120, 0.12);
+}
+
+.hof-award-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid var(--emerald-dark);
+    flex-shrink: 0;
+}
+
+.hof-award-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.hof-award-label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.hof-award-name {
+    font-weight: 700;
+    color: var(--emerald-light);
+    font-size: 1rem;
+}
+
+.hof-award-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 1px solid var(--emerald-dark);
+    transition: transform 0.3s;
+}
+
+.hof-award:hover .hof-award-image {
+    transform: scale(1.15);
+}
+
 /* Join Section */
 .join {
     background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
