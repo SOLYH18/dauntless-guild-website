@@ -78,6 +78,12 @@ body::before {
     filter: drop-shadow(0 0 10px var(--emerald));
 }
 
+.dragon-logo {
+    width: 36px;
+    height: 36px;
+    vertical-align: middle;
+}
+
 .guild-name {
     font-family: 'Cinzel', serif;
     font-size: 1.5rem;
@@ -163,10 +169,20 @@ body::before {
 }
 
 .dragon-emblem {
-    font-size: 8rem;
     margin-bottom: -1rem;
-    filter: drop-shadow(0 0 30px var(--emerald));
     animation: floatPulse 3s ease-in-out infinite;
+}
+
+.dragon-emblem .dragon-logo {
+    width: 128px;
+    height: 128px;
+    filter: drop-shadow(0 0 30px var(--emerald));
+}
+
+.dragon-logo-small {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
 }
 
 @keyframes floatPulse {
