@@ -800,6 +800,119 @@ section {
     cursor: default;
 }
 
+/* Raid Counts Section */
+.raid-counts {
+    background: var(--bg-primary);
+}
+
+.rc-selector {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.rc-month-btn {
+    font-family: 'Cinzel', serif;
+    padding: 0.6rem 1.25rem;
+    background: transparent;
+    border: 1px solid var(--emerald-dark);
+    color: var(--text-secondary);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+}
+
+.rc-month-btn:hover {
+    border-color: var(--emerald);
+    color: var(--emerald-light);
+}
+
+.rc-month-btn.active {
+    background: var(--emerald);
+    border-color: var(--emerald);
+    color: var(--bg-primary);
+    font-weight: 700;
+    box-shadow: 0 0 20px rgba(80, 200, 120, 0.3);
+}
+
+.rc-display {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.rc-card {
+    background: var(--bg-card);
+    border-radius: 15px;
+    padding: 2rem;
+    border: 1px solid var(--emerald-dark);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.rc-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--emerald));
+}
+
+.rc-total {
+    font-family: 'Cinzel', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--emerald-light);
+    text-shadow: 0 0 20px rgba(80, 200, 120, 0.3);
+    margin-bottom: 0.25rem;
+}
+
+.rc-total-label {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+}
+
+.rc-breakdown {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 0.75rem;
+}
+
+.rc-type {
+    background: rgba(80, 200, 120, 0.08);
+    border-radius: 10px;
+    padding: 0.75rem 0.5rem;
+    transition: all 0.3s;
+}
+
+.rc-type:hover {
+    background: rgba(80, 200, 120, 0.15);
+}
+
+.rc-type-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.rc-type-count {
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: var(--text-primary);
+}
+
+.rc-type-label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
 /* Join Section */
 .join {
     background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);

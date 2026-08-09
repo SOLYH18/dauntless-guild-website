@@ -313,7 +313,7 @@ const observer = new IntersectionObserver((entries) => {
 }, observerOptions);
 
 function observeCards() {
-    document.querySelectorAll('.stat-card, .raid-card, .member-card, .hof-award-card').forEach(el => {
+    document.querySelectorAll('.stat-card, .raid-card, .member-card, .hof-award-card, .rc-card').forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(20px)';
         el.style.transition = 'all 0.6s ease-out';
@@ -435,6 +435,80 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// ==================== RAID COUNTS ====================
+
+let rcData = [];
+
+const RC_ICONS = {
+    t4: { icon: '⚔️', label: 'T4' },
+    colo: { icon: '🕋', label: 'COLO' },
+    sr: { icon: '🔐', label: 'SR' },
+    tt: { icon: '🗝️', label: 'TT' },
+    ascnd: { icon: '⬆️', label: 'ASCND' }
+};
+
+async function loadRaidCounts() {
+    const container = document.getElementById('rc-display');
+    const selector = document.getElementById('rc-selector');
+    if (!container || !selector) return;
+
+    try {
+        const res = await fetch(`${API_BASE}/api/raidcounts`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        rcData = await res.json();
+
+        if (!rcData || rcData.length === 0) {
+            container.innerHTML = '<p class="empty">No raid count data yet</p>';
+            return;
+        }
+
+        // Build month selector buttons
+        selector.innerHTML = rcData.map((m, i) =>
+            `<button class="rc-month-btn${i === 0 ? ' active' : ''}" data-idx="${i}">${escapeHTML(m.month)}</button>`
+        ).join('');
+
+        selector.querySelectorAll('.rc-month-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                selector.querySelectorAll('.rc-month-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderRaidCount(parseInt(btn.dataset.idx));
+            });
+        });
+
+        // Show latest month
+        renderRaidCount(0);
+
+    } catch (err) {
+        console.error('Raid counts load error:', err);
+        container.innerHTML = '<p class="error">⚠️ Could not load raid counts</p>';
+    }
+}
+
+function renderRaidCount(idx) {
+    const container = document.getElementById('rc-display');
+    const month = rcData[idx];
+    if (!month) return;
+
+    const types = ['t4', 'colo', 'sr', 'tt', 'ascnd'];
+
+    container.innerHTML = `
+        <div class="rc-card">
+            <div class="rc-total">${month.total.toLocaleString()}</div>
+            <div class="rc-total-label">Total Raids</div>
+            <div class="rc-breakdown">
+                ${types.map(t => `
+                    <div class="rc-type">
+                        <div class="rc-type-icon">${RC_ICONS[t].icon}</div>
+                        <div class="rc-type-count">${month[t].toLocaleString()}</div>
+                        <div class="rc-type-label">${RC_ICONS[t].label}</div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>`;
+
+    observeCards();
+}
+
 // Load all live data
 async function init() {
     await Promise.all([
@@ -443,7 +517,8 @@ async function init() {
         loadStats(),
         loadClovers(),
         loadRoster(),
-        loadHallOfFame()
+        loadHallOfFame(),
+        loadRaidCounts()
     ]);
     observeCards();
     console.log('🐉 Dauntless Guild Website - Live data loaded');
