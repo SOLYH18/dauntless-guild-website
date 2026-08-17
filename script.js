@@ -553,6 +553,33 @@ function setupGalleryFilters() {
     loadGallery('');
 }
 
+// ==================== REELS ====================
+
+async function loadReels() {
+    const grid = document.getElementById('reels-grid');
+    if (!grid) return;
+
+    grid.innerHTML = '<p class="loading">Loading reels...</p>';
+
+    const data = await fetchAPI('/api/reels?limit=24');
+
+    if (!data || !data.videos || data.videos.length === 0) {
+        grid.innerHTML = '<p class="reels-empty">No clips yet. Post your videos in the reels channel!</p>';
+        return;
+    }
+
+    grid.innerHTML = data.videos.map(v => `
+        <div class="reels-card">
+            <video src="${escapeHTML(v.videoUrl)}" class="reels-video" controls preload="metadata" playsinline></video>
+            <div class="reels-card-info">
+                ${v.author && v.author.avatarUrl ? `<img src="${escapeHTML(v.author.avatarUrl)}" alt="" class="reels-card-avatar" loading="lazy">` : ''}
+                <span class="reels-card-author">${escapeHTML(v.author ? (v.author.displayName || v.author.username) : 'Unknown')}</span>
+                <a class="reels-card-link" href="${escapeHTML(v.messageUrl)}" target="_blank" rel="noopener">↗ Discord</a>
+            </div>
+        </div>
+    `).join('');
+}
+
 // Load all live data
 async function init() {
     await Promise.all([
@@ -562,7 +589,8 @@ async function init() {
         loadClovers(),
         loadRoster(),
         loadHallOfFame(),
-        loadRaidCounts()
+        loadRaidCounts(),
+        loadReels()
     ]);
     observeCards();
     setupGalleryFilters();

@@ -406,6 +406,88 @@ section {
     font-size: 1rem;
 }
 
+/* Reels Section */
+.reels {
+    background: var(--bg-secondary);
+}
+
+.reels-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.reels-card {
+    background: var(--bg-card);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--emerald-dark);
+    transition: all 0.3s;
+}
+
+.reels-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--emerald-light);
+    box-shadow: 0 8px 30px rgba(80, 200, 120, 0.15);
+}
+
+.reels-video {
+    width: 100%;
+    height: 320px;
+    object-fit: contain;
+    background: #000;
+    display: block;
+}
+
+.reels-card-info {
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.reels-card-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.reels-card-author {
+    flex: 1;
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.reels-card-link {
+    color: var(--emerald-light);
+    text-decoration: none;
+    font-size: 0.8rem;
+    background: rgba(80, 200, 120, 0.1);
+    padding: 3px 10px;
+    border-radius: 6px;
+    transition: all 0.3s;
+}
+
+.reels-card-link:hover {
+    background: var(--emerald);
+    color: var(--bg-primary);
+}
+
+.reels-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: var(--text-secondary);
+    padding: 3rem 1rem;
+    font-size: 1rem;
+}
+
 /* Raids Section */
 .raids {
     background: var(--bg-secondary);
