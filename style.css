@@ -435,10 +435,24 @@ section {
 
 .reels-video {
     width: 100%;
-    height: 320px;
+    height: auto;
+    aspect-ratio: 16 / 9;
     object-fit: contain;
     background: #000;
     display: block;
+}
+
+.reels-embed {
+    border: 0;
+}
+
+.reels-card-caption {
+    margin: 0;
+    padding: 0.75rem 1rem 0;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
 }
 
 .reels-card-info {

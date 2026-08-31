@@ -555,6 +555,11 @@ function setupGalleryFilters() {
 
 // ==================== REELS ====================
 
+function getReelCaption(content) {
+    if (!content) return '';
+    return content.replace(/https?:\/\/[^\s<>"']+/gi, '').trim();
+}
+
 async function loadReels() {
     const grid = document.getElementById('reels-grid');
     if (!grid) return;
@@ -564,20 +569,42 @@ async function loadReels() {
     const data = await fetchAPI('/api/reels?limit=24');
 
     if (!data || !data.videos || data.videos.length === 0) {
-        grid.innerHTML = '<p class="reels-empty">No clips yet. Post your videos in the reels channel!</p>';
+        grid.innerHTML = '<p class="reels-empty">No YouTube or Twitch links yet. Post one in the reels channel!</p>';
         return;
     }
 
-    grid.innerHTML = data.videos.map(v => `
-        <div class="reels-card">
-            <video src="${escapeHTML(v.videoUrl)}" class="reels-video" controls preload="metadata" playsinline></video>
-            <div class="reels-card-info">
-                ${v.author && v.author.avatarUrl ? `<img src="${escapeHTML(v.author.avatarUrl)}" alt="" class="reels-card-avatar" loading="lazy">` : ''}
-                <span class="reels-card-author">${escapeHTML(v.author ? (v.author.displayName || v.author.username) : 'Unknown')}</span>
-                <a class="reels-card-link" href="${escapeHTML(v.messageUrl)}" target="_blank" rel="noopener">↗ Discord</a>
+    const cards = data.videos.map(v => {
+        const embedUrl = window.ReelsEmbed
+            ? window.ReelsEmbed.getReelEmbedUrl(v, window.location.hostname)
+            : null;
+        if (!embedUrl) return '';
+
+        const platformLabel = window.ReelsEmbed.getReelPlatformLabel(v.platform);
+        const caption = getReelCaption(v.content);
+        return `
+            <div class="reels-card">
+                <iframe
+                    src="${escapeHTML(embedUrl)}"
+                    class="reels-video reels-embed"
+                    title="${escapeHTML(platformLabel)} reel"
+                    loading="lazy"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen></iframe>
+                ${caption ? `<p class="reels-card-caption">${escapeHTML(caption)}</p>` : ''}
+                <div class="reels-card-info">
+                    ${v.author && v.author.avatarUrl ? `<img src="${escapeHTML(v.author.avatarUrl)}" alt="" class="reels-card-avatar" loading="lazy">` : ''}
+                    <span class="reels-card-author">${escapeHTML(v.author ? (v.author.displayName || v.author.username) : 'Unknown')}</span>
+                    <a class="reels-card-link" href="${escapeHTML(v.videoUrl)}" target="_blank" rel="noopener">${escapeHTML(platformLabel)}</a>
+                    <a class="reels-card-link" href="${escapeHTML(v.messageUrl)}" target="_blank" rel="noopener">Discord</a>
+                </div>
             </div>
-        </div>
-    `).join('');
+        `;
+    }).filter(Boolean);
+
+    grid.innerHTML = cards.length > 0
+        ? cards.join('')
+        : '<p class="reels-empty">No playable YouTube or Twitch links found.</p>';
 }
 
 // Load all live data
