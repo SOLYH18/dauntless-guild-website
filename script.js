@@ -310,99 +310,81 @@ function observeCards() {
 
 // ==================== HALL OF FAME ====================
 
-const HOF_DATA = [
-  {
-    "month": "JULY 2026",
-    "awards": [
-      { "award": "👑 MVP", "displayName": "Bella", "avatarUrl": "https://cdn.discordapp.com/avatars/592932656941891590/b07da3f8cf020edb14a81358b3e3ac08.webp?size=128", "image_url": "https://i.imgur.com/pcg5fg7.png" },
-      { "award": "🏆 Top Coloist", "displayName": "Cruelty", "avatarUrl": "https://cdn.discordapp.com/avatars/1205866633386524754/06d706b53fe0f4824e4fe4d7ebd93e23.webp?size=128", "image_url": "https://i.imgur.com/Sd6nt3M.png" },
-      { "award": "⚔️ T4 Conqueror", "displayName": "Pit", "avatarUrl": "https://cdn.discordapp.com/avatars/1495344277465726978/f5af77300e51b5190f56e72dce6903d0.webp?size=128", "image_url": "https://i.imgur.com/VMvhpyu.png" }
-    ]
-  },
-  {
-    "month": "JUNE 2026",
-    "awards": [
-      { "award": "👑 MVP", "displayName": "JustJakey", "avatarUrl": "https://cdn.discordapp.com/avatars/427516120472223744/7f06f45884056d3017846c70d5cc43db.webp?size=128", "image_url": "https://i.imgur.com/Iq4caok.png" },
-      { "award": "🏆 Top Coloist", "displayName": "JustJakey", "avatarUrl": "https://cdn.discordapp.com/avatars/427516120472223744/7f06f45884056d3017846c70d5cc43db.webp?size=128", "image_url": "https://i.imgur.com/6LSc0K4.png" },
-      { "award": "⚔️ T4 Conqueror", "displayName": "SteadFast", "avatarUrl": "https://cdn.discordapp.com/avatars/1026491113445539840/94e798187093083ccc925748c6ece936.webp?size=128", "image_url": "https://i.imgur.com/8hay47A.png" }
-    ]
-  },
-  {
-    "month": "MAY 2026",
-    "awards": [
-      { "award": "👑 MVP", "displayName": "Kuen", "avatarUrl": "https://cdn.discordapp.com/avatars/731141788697493544/38b2bf66ba1fbc94a73ca7eb0604da15.webp?size=128", "image_url": "https://i.imgur.com/FVPKQlT.png" },
-      { "award": "🏆 Top Coloist", "displayName": "SteadFast", "avatarUrl": "https://cdn.discordapp.com/avatars/1026491113445539840/94e798187093083ccc925748c6ece936.webp?size=128", "image_url": "https://i.imgur.com/Q75xwnw.png" },
-      { "award": "⚔️ T4 Conqueror", "displayName": "Kuen", "avatarUrl": "https://cdn.discordapp.com/avatars/731141788697493544/38b2bf66ba1fbc94a73ca7eb0604da15.webp?size=128", "image_url": "https://i.imgur.com/ge1FBDN.png" }
-    ]
-  },
-  {
-    "month": "APRIL 2026",
-    "awards": [
-      { "award": "👑 MVP", "displayName": "Bella", "avatarUrl": "https://cdn.discordapp.com/avatars/592932656941891590/b07da3f8cf020edb14a81358b3e3ac08.webp?size=128", "image_url": "https://i.imgur.com/NobjncK.png" },
-      { "award": "🏆 Top Coloist", "displayName": "JustJakey", "avatarUrl": "https://cdn.discordapp.com/avatars/427516120472223744/7f06f45884056d3017846c70d5cc43db.webp?size=128", "image_url": "https://i.imgur.com/xe0aGmR.png" },
-      { "award": "⚔️ T4 Conqueror", "displayName": "Bella", "avatarUrl": "https://cdn.discordapp.com/avatars/592932656941891590/b07da3f8cf020edb14a81358b3e3ac08.webp?size=128", "image_url": "https://i.imgur.com/y8GBMjm.png" }
-    ]
-  },
-  {
-    "month": "MARCH 2026",
-    "awards": [
-      { "award": "👑 MVP", "displayName": "JustJakey", "avatarUrl": "https://cdn.discordapp.com/avatars/427516120472223744/7f06f45884056d3017846c70d5cc43db.webp?size=128", "image_url": "https://i.imgur.com/6VUCTnx.png" },
-      { "award": "🏆 Top Coloist", "displayName": "JustJakey", "avatarUrl": "https://cdn.discordapp.com/avatars/427516120472223744/7f06f45884056d3017846c70d5cc43db.webp?size=128", "image_url": "https://i.imgur.com/YVyy4Pv.png" },
-      { "award": "⚔️ T4 Conqueror", "displayName": "NobitaNoCounter", "avatarUrl": "https://cdn.discordapp.com/avatars/1214200670585102337/4302bb2ea5cd450aa86cf34b2344bd02.webp?size=128", "image_url": "https://i.imgur.com/F95ZsC9.png" }
-    ]
-  },
-  {
-    "month": "FEBRUARY 2026",
-    "awards": [
-      { "award": "👑 MVP", "displayName": "j3r1c", "avatarUrl": "https://cdn.discordapp.com/avatars/1446597925101764771/6526f8fc37d1fec4b9e57c2a19f67fa2.webp?size=128", "image_url": "https://i.imgur.com/I0buGuz.png" },
-      { "award": "🏆 Top Coloist", "displayName": "Several People", "avatarUrl": "https://cdn.discordapp.com/avatars/417684409395707905/61246229c739d4a34a4663904945998c.webp?size=128", "image_url": "https://i.imgur.com/TjyugRD.png" },
-      { "award": "⚔️ T4 Conqueror", "displayName": "j3r1c", "avatarUrl": "https://cdn.discordapp.com/avatars/1446597925101764771/6526f8fc37d1fec4b9e57c2a19f67fa2.webp?size=128", "image_url": "https://i.imgur.com/nmCV3Xe.png" }
-    ]
-  }
-];
+let HOF_DATA = [];
 
-function loadHallOfFame() {
+async function loadHallOfFame() {
     const container = document.getElementById('hof-display');
     const selector = document.getElementById('hof-selector');
     if (!container || !selector) return;
 
-    if (HOF_DATA.length === 0) {
-        container.innerHTML = '<p class="empty">No Hall of Fame data yet</p>';
-        return;
-    }
+    container.innerHTML = '<p class="loading">Loading Hall of Fame...</p>';
+    selector.innerHTML = '';
 
-    // Build month selector buttons
-    selector.innerHTML = HOF_DATA.map((m, i) =>
-        `<button class="hof-month-btn${i === 0 ? ' active' : ''}" data-idx="${i}">${escapeHTML(m.month)}</button>`
-    ).join('');
+    try {
+        const res = await fetch(`${API_BASE}/api/hall-of-fame`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        HOF_DATA = Array.isArray(data.months)
+            ? data.months.filter(month => month && Array.isArray(month.awards))
+            : [];
 
-    selector.querySelectorAll('.hof-month-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            selector.querySelectorAll('.hof-month-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            renderMonth(parseInt(btn.dataset.idx));
+        if (HOF_DATA.length === 0) {
+            container.innerHTML = '<p class="empty">No Hall of Fame data yet</p>';
+            return;
+        }
+
+        selector.innerHTML = HOF_DATA.map((month, index) =>
+            `<button class="hof-month-btn${index === 0 ? ' active' : ''}" data-idx="${index}">${escapeHTML(month.month)}</button>`
+        ).join('');
+
+        selector.querySelectorAll('.hof-month-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                selector.querySelectorAll('.hof-month-btn').forEach(item => item.classList.remove('active'));
+                button.classList.add('active');
+                renderMonth(Number.parseInt(button.dataset.idx, 10));
+            });
         });
-    });
 
-    // Show latest month
-    renderMonth(0);
+        renderMonth(0);
+    } catch (error) {
+        console.error('Hall of Fame load failed:', error);
+        container.innerHTML = '<p class="empty">Unable to load Hall of Fame right now.</p>';
+    }
 }
 
 function renderMonth(idx) {
     const container = document.getElementById('hof-display');
     const month = HOF_DATA[idx];
-    if (!month) return;
+    if (!container || !month) return;
 
-    container.innerHTML = month.awards.map(a => `
-        <div class="hof-award-card">
-            <img src="${escapeHTML(a.avatarUrl)}" alt="${escapeHTML(a.displayName)}" class="hof-award-avatar" loading="lazy">
-            <div class="hof-award-label">${a.award}</div>
-            <div class="hof-award-name">${escapeHTML(a.displayName)}</div>
-            ${a.image_url ? `<img src="${escapeHTML(a.image_url)}" alt="Award card" class="hof-stat-image" loading="lazy" onclick="openLightbox('${escapeHTML(a.image_url)}')">` : ''}
-        </div>
-    `).join('');
+    if (month.awards.length === 0) {
+        container.innerHTML = '<p class="empty">No awards posted for this month.</p>';
+        return;
+    }
 
-    // Re-observe for scroll animation if switching months after init
+    container.innerHTML = month.awards.map(a => {
+        const displayName = a.displayName || a.username || 'Unknown Member';
+        const avatar = a.avatarUrl
+            ? `<img src="${escapeHTML(a.avatarUrl)}" alt="${escapeHTML(displayName)}" class="hof-award-avatar" loading="lazy">`
+            : '<div class="hof-award-avatar hof-award-avatar-placeholder" aria-hidden="true">?</div>';
+        const awardImage = a.imageUrl
+            ? `<img src="${escapeHTML(a.imageUrl)}" alt="${escapeHTML(a.award)} award card" class="hof-stat-image" data-lightbox-url="${escapeHTML(a.imageUrl)}" loading="lazy">`
+            : '';
+
+        return `
+            <div class="hof-award-card">
+                ${avatar}
+                <div class="hof-award-label">${escapeHTML(a.award)}</div>
+                <div class="hof-award-name">${escapeHTML(displayName)}</div>
+                ${awardImage}
+            </div>
+        `;
+    }).join('');
+
+    container.querySelectorAll('[data-lightbox-url]').forEach(image => {
+        image.addEventListener('click', () => openLightbox(image.dataset.lightboxUrl));
+    });
+
     setTimeout(observeCards, 100);
 }
 

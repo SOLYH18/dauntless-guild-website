@@ -959,6 +959,17 @@ section {
     border-radius: 50%;
     border: 2px solid var(--emerald);
     margin-bottom: 0.5rem;
+    object-fit: cover;
+}
+
+.hof-award-avatar-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-secondary);
+    color: var(--emerald-light);
+    font-weight: 700;
+    font-size: 1.25rem;
 }
 
 .hof-award-label {
