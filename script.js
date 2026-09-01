@@ -301,6 +301,8 @@ const observer = new IntersectionObserver((entries) => {
 
 function observeCards() {
     document.querySelectorAll('.stat-card, .raid-card, .member-card, .hof-award-card, .rc-card, .gallery-card').forEach(el => {
+        if (el.dataset.scrollObserved === 'true') return;
+        el.dataset.scrollObserved = 'true';
         el.style.opacity = '0';
         el.style.transform = 'translateY(20px)';
         el.style.transition = 'all 0.6s ease-out';

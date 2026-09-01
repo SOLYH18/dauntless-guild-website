@@ -29,3 +29,8 @@ test('Hall of Fame safely supports award images and members without avatars', ()
     assert.match(section, /hof-award-avatar-placeholder/);
     assert.match(section, /escapeHTML\(displayName\)/);
 });
+
+test('scroll animation does not hide already-observed Hall of Fame cards on repeated loads', () => {
+    assert.match(source, /if \(el\.dataset\.scrollObserved === 'true'\) return/);
+    assert.match(source, /el\.dataset\.scrollObserved = 'true'/);
+});
