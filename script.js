@@ -169,6 +169,8 @@ async function loadStats() {
     if (!stats) {
         showError('top-raiders', 'Could not load stats');
         showError('raid-breakdown', 'Could not load stats');
+        setText('summary-total-raids', null, '—');
+        setText('summary-success-rate', null, '—');
         return;
     }
 
@@ -190,6 +192,7 @@ async function loadStats() {
     const breakdown = document.getElementById('raid-breakdown');
     const breaks = [
         { icon: '🕋', label: 'COLO', value: stats.breakdown.colo },
+        { icon: '☠️', label: 'NMCOLO', value: stats.breakdown.nmColo },
         { icon: '⚔️', label: 'T4NM', value: stats.breakdown.t4 },
         { icon: '🔐', label: 'SR', value: stats.breakdown.sr },
         { icon: '🗝️', label: 'TT', value: stats.breakdown.tt },
@@ -201,6 +204,9 @@ async function loadStats() {
             <span class="breakdown-label">${b.label}</span>
             <span class="breakdown-value">${b.value || 0}</span>
         </div>`).join('');
+
+    setText('summary-total-raids', Number(stats.totalRaids).toLocaleString(), '—');
+    setText('summary-success-rate', `${stats.successRate}%`, '—');
 }
 
 // Load all live data
