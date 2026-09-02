@@ -71,6 +71,15 @@ body::before {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    flex: 0 0 auto;
+}
+
+.nav-brand-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 1px;
 }
 
 .dragon-icon {
@@ -88,8 +97,17 @@ body::before {
     font-family: 'Cinzel', serif;
     font-size: 1.5rem;
     font-weight: 700;
+    line-height: 1;
     color: var(--emerald);
     text-shadow: 0 0 20px var(--emerald-dark);
+}
+
+.game-wordmark {
+    display: block;
+    width: 132px;
+    height: auto;
+    opacity: 0.96;
+    filter: drop-shadow(0 0 5px rgba(120, 198, 255, 0.35));
 }
 
 .mmorpg-tag {
@@ -1662,6 +1680,10 @@ section {
         font-size: 1rem;
     }
 
+    .game-wordmark {
+        width: 102px;
+    }
+
     .dragon-logo {
         width: 26px;
         height: 26px;
@@ -1712,6 +1734,10 @@ section {
 @media (max-width: 480px) {
     .guild-name {
         font-size: 0.8rem;
+    }
+
+    .game-wordmark {
+        width: 84px;
     }
 
     .dragon-logo {
