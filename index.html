@@ -24,6 +24,7 @@
             <li><a href="#reels">Reels</a></li>
             <li><a href="#stats">Stats</a></li>
             <li><a href="#clover-info">Clovers</a></li>
+            <li><a href="#fishing">Fishing</a></li>
             <li><a href="#roster">Staffs</a></li>
             <li><a href="#join">Join Us</a></li>
         </ul>
@@ -202,7 +203,7 @@
             </div>
 
             <div class="stat-card">
-                <h3>🍀 Clover Leaderboard</h3>
+                <h3><img src="https://cdn.discordapp.com/emojis/1536609295658123358.webp?size=64&amp;quality=lossless" alt="" class="clover-emoji clover-emoji-heading"> Clover Leaderboard</h3>
                 <ul class="leaderboard cloverboard" id="clover-leaders">
                     <li class="loading">Loading...</li>
                 </ul>
@@ -233,19 +234,19 @@
     <!-- Clover System Section -->
     <section id="clover-info" class="clover-info">
         <div class="section-header">
-            <h2>🍀 The Clover System</h2>
+            <h2><img src="https://cdn.discordapp.com/emojis/1536609295658123358.webp?size=64&amp;quality=lossless" alt="" class="clover-emoji clover-emoji-title"> The Clover System</h2>
             <p>Complete daily quests, earn clovers, build streaks — a little friendly competition never hurt</p>
         </div>
         <div class="clover-grid">
             <div class="clover-feature">
                 <span class="clover-icon-large">🎯</span>
                 <h4>Daily Quests</h4>
-                <p>Each day you get a unique quest — bring the requested items and earn <strong>1–10🍀</strong> per turn-in.</p>
+                <p>Each day you get a unique quest — bring the requested items and earn <strong>1–10 <img src="https://cdn.discordapp.com/emojis/1536609295658123358.webp?size=64&amp;quality=lossless" alt="Clover" class="clover-emoji"></strong> per turn-in.</p>
             </div>
             <div class="clover-feature">
                 <span class="clover-icon-large">📦</span>
                 <h4>Daily Cap</h4>
-                <p>Maximum <strong>20🍀</strong> per day from quests and turn-ins. Spend your extras in the clover shop!</p>
+                <p>Maximum <strong>20 <img src="https://cdn.discordapp.com/emojis/1536609295658123358.webp?size=64&amp;quality=lossless" alt="Clover" class="clover-emoji"></strong> per day from quests and turn-ins. Spend your extras in the clover shop!</p>
             </div>
             <div class="clover-feature">
                 <span class="clover-icon-large">🔥</span>
@@ -267,6 +268,86 @@
                 <h4>Double Events</h4>
                 <p>Owners can activate <strong>2x clover events</strong> for limited windows — double the earnings, double the glory.</p>
             </div>
+        </div>
+    </section>
+
+    <!-- Fishing System Section -->
+    <section id="fishing" class="fishing-section">
+        <div class="section-header">
+            <h2>🎣 Dauntless Fishing</h2>
+            <p>Cast, collect all 100 species, and turn complete sets into Clovers</p>
+        </div>
+
+        <div class="fishing-summary" id="fishing-summary">
+            <div class="fishing-loading">Loading fishing waters...</div>
+        </div>
+
+        <div class="fishing-live-grid">
+            <article class="fishing-panel">
+                <div class="fishing-panel-heading">
+                    <div>
+                        <span class="fishing-eyebrow" id="fishing-leaderboard-month">CURRENT MONTH</span>
+                        <h3>🏆 Top Anglers</h3>
+                    </div>
+                    <span class="fishing-panel-note">Ranked by total weight</span>
+                </div>
+                <div id="fishing-leaderboard" class="fishing-leaderboard">
+                    <div class="fishing-loading">Loading anglers...</div>
+                </div>
+            </article>
+
+            <article class="fishing-panel">
+                <div class="fishing-panel-heading">
+                    <div>
+                        <span class="fishing-eyebrow">LEGENDARY+</span>
+                        <h3>✨ Recent Rare Catches</h3>
+                    </div>
+                    <span class="fishing-panel-note">Latest eight catches</span>
+                </div>
+                <div id="fishing-rare-catches" class="fishing-catches">
+                    <div class="fishing-loading">Scanning the depths...</div>
+                </div>
+            </article>
+        </div>
+
+        <div class="fishing-guide-heading">
+            <span class="fishing-eyebrow">CHOOSE YOUR ODDS</span>
+            <h3>Bait Shop Guide</h3>
+            <p>Every player receives one free Regular Bait daily and may purchase up to 20 bait per day across all types.</p>
+        </div>
+        <div id="fishing-baits" class="fishing-baits">
+            <div class="fishing-loading">Loading bait guide...</div>
+        </div>
+
+        <div class="fishing-guide-heading">
+            <span class="fishing-eyebrow">100 SPECIES TO DISCOVER</span>
+            <h3>Fish Tier Guide</h3>
+            <p>Complete a tier set to sell it for Clovers. Unsold fish retain full value this month and half value during the following month.</p>
+        </div>
+        <div class="fishing-tier-table-wrap">
+            <table class="fishing-tier-table">
+                <thead>
+                    <tr>
+                        <th>Tier</th>
+                        <th>Rarity</th>
+                        <th>Regular Odds</th>
+                        <th>Weight</th>
+                        <th>Set</th>
+                        <th>Payout</th>
+                        <th>Caught</th>
+                    </tr>
+                </thead>
+                <tbody id="fishing-tiers">
+                    <tr><td colspan="7" class="fishing-loading">Loading tier guide...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="fishing-command-strip">
+            <div><span>1</span><strong>Buy bait</strong><code>.buybait</code></div>
+            <div><span>2</span><strong>Cast your line</strong><code>.fish</code></div>
+            <div><span>3</span><strong>Track your collection</strong><code>.fishbag · .fishdex</code></div>
+            <div><span>4</span><strong>Sell a complete set</strong><code>.sellfish &lt;tier&gt;</code></div>
         </div>
     </section>
 

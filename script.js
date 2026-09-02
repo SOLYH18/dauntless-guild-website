@@ -3,6 +3,11 @@
 // CONFIG: Change this to your bot's Railway URL after deploy
 // ============================================================
 const API_BASE = 'https://dauntless-flyff-bot-production.up.railway.app';
+const CLOVER_EMOJI_URL = 'https://cdn.discordapp.com/emojis/1536609295658123358.webp?size=64&quality=lossless';
+
+function cloverIcon(className = '') {
+    return `<img src="${CLOVER_EMOJI_URL}" alt="Clover" class="clover-emoji ${className}">`;
+}
 
 // ==================== API HELPERS ====================
 
@@ -224,7 +229,7 @@ async function loadClovers() {
             <span class="rank${i === 0 ? ' crown' : ''}">${i === 0 ? '👑' : i + 1}</span>
             ${c.avatarUrl ? `<img src="${escapeHTML(c.avatarUrl)}" alt="" class="raider-avatar" loading="lazy">` : ''}
             <span class="name">${escapeHTML(c.displayName || c.username)}</span>
-            <span class="score clovers">${c.clovers}🍀</span>
+            <span class="score clovers">${c.clovers} ${cloverIcon()}</span>
             ${c.streak > 0 ? `<span class="streak" title="${c.streak}-day streak">🔥${c.streak}</span>` : ''}
         </li>`).join('');
 }
@@ -597,9 +602,143 @@ async function loadReels() {
         : '<p class="reels-empty">No playable YouTube or Twitch links found.</p>';
 }
 
+// ==================== FISHING DASHBOARD ====================
+
+function formatFishingMonth(month) {
+    if (!/^\d{4}-\d{2}$/.test(month || '')) return 'CURRENT MONTH';
+    const [year, monthNumber] = month.split('-').map(Number);
+    return new Date(Date.UTC(year, monthNumber - 1, 1)).toLocaleDateString('en-US', {
+        month: 'long', year: 'numeric', timeZone: 'UTC'
+    }).toUpperCase();
+}
+
+function formatCatchDate(value) {
+    if (!value) return 'Recently';
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return 'Recently';
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+function fishingAvatar(person) {
+    if (person.avatarUrl) {
+        return `<img src="${escapeHTML(person.avatarUrl)}" alt="" class="fishing-avatar" loading="lazy">`;
+    }
+    return '<span class="fishing-avatar fishing-avatar-fallback">🎣</span>';
+}
+
+function fishingNumber(value) {
+    const number = Number(value);
+    return Number.isFinite(number) ? number : 0;
+}
+
+function fishingArray(value) {
+    return Array.isArray(value) ? value : [];
+}
+
+async function loadFishing() {
+    const data = await fetchAPI('/api/fishing');
+    const summary = document.getElementById('fishing-summary');
+    const leaderboard = document.getElementById('fishing-leaderboard');
+    const rareCatches = document.getElementById('fishing-rare-catches');
+    const baits = document.getElementById('fishing-baits');
+    const tiers = document.getElementById('fishing-tiers');
+
+    if (!data || typeof data !== 'object' || !data.summary) {
+        summary.innerHTML = '<div class="fishing-empty">⚠️ Fishing stats are temporarily unavailable.</div>';
+        leaderboard.innerHTML = '<div class="fishing-empty">Could not load anglers.</div>';
+        rareCatches.innerHTML = '<div class="fishing-empty">Could not load catches.</div>';
+        baits.innerHTML = '<div class="fishing-empty">Could not load bait guide.</div>';
+        tiers.innerHTML = '<tr><td colspan="7" class="fishing-empty">Could not load tier guide.</td></tr>';
+        return;
+    }
+
+    const fishingSummary = data.summary;
+    const fishingLeaders = fishingArray(data.leaderboard);
+    const fishingRares = fishingArray(data.recentRareCatches);
+    const fishingBaits = fishingArray(data.baits);
+    const fishingTiers = fishingArray(data.tiers);
+    const totalSpecies = fishingNumber(data.totalSpecies);
+
+    const cards = [
+        { icon: '🌊', value: fishingNumber(fishingSummary.caughtThisMonth).toLocaleString(), label: 'Caught This Month' },
+        { icon: '🎣', value: fishingNumber(fishingSummary.uniqueAnglers).toLocaleString(), label: 'Dauntless Anglers' },
+        { icon: '⚖️', value: `${fishingNumber(fishingSummary.heaviestCatch).toFixed(1)} kg`, label: 'Heaviest Catch' },
+        { icon: '🐋', value: fishingNumber(fishingSummary.seasonalCaught).toLocaleString(), label: 'Seasonal Catches' },
+        { icon: '📖', value: fishingNumber(fishingSummary.totalCaught).toLocaleString(), label: 'All-Time Catches' },
+    ];
+    summary.innerHTML = cards.map(card => `
+        <div class="fishing-summary-card">
+            <span class="fishing-summary-icon">${card.icon}</span>
+            <strong>${card.value}</strong>
+            <span>${card.label}</span>
+        </div>`).join('');
+
+    setText('fishing-leaderboard-month', formatFishingMonth(data.month));
+    leaderboard.innerHTML = fishingLeaders.length ? fishingLeaders.map((angler, index) => `
+        <div class="fishing-leader-row">
+            <span class="fishing-rank ${index < 3 ? 'top' : ''}">${index + 1}</span>
+            ${fishingAvatar(angler)}
+            <div class="fishing-person">
+                <strong>${escapeHTML(angler.displayName)}</strong>
+                <span>${fishingNumber(angler.catches)} catches · Codex [${fishingNumber(angler.codexCaught)}/${totalSpecies}]</span>
+            </div>
+            <div class="fishing-weight">
+                <strong>${fishingNumber(angler.totalWeight).toFixed(1)} kg</strong>
+                <span>best ${fishingNumber(angler.heaviestCatch).toFixed(1)} kg</span>
+            </div>
+        </div>`).join('') : '<div class="fishing-empty">No catches this month yet.</div>';
+
+    const tierMap = Object.fromEntries(fishingTiers.map(tier => [fishingNumber(tier.tier), tier]));
+    rareCatches.innerHTML = fishingRares.length ? fishingRares.map(catchItem => {
+        const catchTier = Math.min(7, Math.max(1, Math.trunc(fishingNumber(catchItem.tier))));
+        const tier = tierMap[catchTier] || { emoji: '🐟', name: `Tier ${catchTier}` };
+        return `
+            <div class="fishing-catch-row tier-${catchTier}">
+                <span class="fishing-catch-icon">${escapeHTML(String(tier.emoji || '🐟'))}</span>
+                <div class="fishing-person">
+                    <strong>${escapeHTML(catchItem.species)}</strong>
+                    <span>${escapeHTML(catchItem.displayName)} · ${escapeHTML(tier.name)}</span>
+                </div>
+                <div class="fishing-weight">
+                    <strong>${fishingNumber(catchItem.weight).toFixed(2)} kg</strong>
+                    <span>${formatCatchDate(catchItem.caughtAt)}</span>
+                </div>
+            </div>`;
+    }).join('') : '<div class="fishing-empty">No Legendary+ catches yet.</div>';
+
+    baits.innerHTML = fishingBaits.map(bait => {
+        const odds = fishingArray(bait.odds).map((odd, index) => fishingNumber(odd) > 0 ? `<span>T${index + 1} ${fishingNumber(odd)}%</span>` : '').filter(Boolean).join('');
+        const baitClass = String(bait.key || '').toLowerCase().replace(/[^a-z0-9-]/g, '');
+        return `
+            <article class="fishing-bait-card bait-${baitClass}">
+                <div class="fishing-bait-top">
+                    <span class="fishing-bait-icon">${escapeHTML(String(bait.emoji || '🪱'))}</span>
+                    <div><h4>${escapeHTML(bait.name)}</h4><p>${escapeHTML(bait.description)}</p></div>
+                </div>
+                <div class="fishing-bait-price">${fishingNumber(bait.price)} ${cloverIcon('clover-emoji-price')}</div>
+                <div class="fishing-odds">${odds}</div>
+            </article>`;
+    }).join('');
+
+    const tierCounts = data.tierCounts && typeof data.tierCounts === 'object' ? data.tierCounts : {};
+    tiers.innerHTML = fishingTiers.map(tier => {
+        const tierNumber = Math.min(7, Math.max(1, Math.trunc(fishingNumber(tier.tier))));
+        return `
+        <tr class="fish-tier-${tierNumber}">
+            <td data-label="Tier"><strong>T${tierNumber}</strong></td>
+            <td data-label="Rarity"><span class="fishing-tier-name">${escapeHTML(String(tier.emoji || '🐟'))} ${escapeHTML(tier.name)}</span><small>${fishingNumber(tier.speciesCount)} species</small></td>
+            <td data-label="Regular Odds">${fishingNumber(tier.odds)}%</td>
+            <td data-label="Weight">${fishingNumber(tier.weightMin)}–${fishingNumber(tier.weightMax)} kg</td>
+            <td data-label="Set">${fishingNumber(tier.setSize)} fish</td>
+            <td data-label="Payout"><span class="fishing-payout">${fishingNumber(tier.sellMin)}–${fishingNumber(tier.sellMax)} ${cloverIcon()}</span></td>
+            <td data-label="Caught">${fishingNumber(tierCounts[tierNumber]).toLocaleString()}</td>
+        </tr>`;
+    }).join('');
+}
+
 // Load all live data
 async function init() {
-    await Promise.all([
+    await Promise.allSettled([
         loadHeroStats(),
         loadActiveRaids(),
         loadStats(),
@@ -607,7 +746,8 @@ async function init() {
         loadRoster(),
         loadHallOfFame(),
         loadRaidCounts(),
-        loadReels()
+        loadReels(),
+        loadFishing()
     ]);
     observeCards();
     setupGalleryFilters();
