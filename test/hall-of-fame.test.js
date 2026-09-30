@@ -30,6 +30,15 @@ test('Hall of Fame safely supports award images and members without avatars', ()
     assert.match(section, /escapeHTML\(displayName\)/);
 });
 
+test('Hall of Fame uses the approved static Discord custom emoji images for every award category', () => {
+    assert.match(section, /1552822464470581278\.png\?size=64/);
+    assert.match(section, /1552825535015424100\.png\?size=64/);
+    assert.match(section, /1552825340940783737\.png\?size=64/);
+    assert.match(section, /1552822344115036180\.png\?size=64/);
+    assert.match(section, /class="hof-award-emoji"/);
+    assert.match(section, /escapeHTML\(awardLabel\)/);
+});
+
 test('scroll animation does not hide already-observed Hall of Fame cards on repeated loads', () => {
     assert.match(source, /if \(el\.dataset\.scrollObserved === 'true'\) return/);
     assert.match(source, /el\.dataset\.scrollObserved = 'true'/);

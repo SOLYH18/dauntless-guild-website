@@ -325,6 +325,25 @@ function observeCards() {
 
 let HOF_DATA = [];
 
+const HOF_AWARD_EMOJIS = {
+    '👑 MVP': {
+        label: 'MVP',
+        url: 'https://cdn.discordapp.com/emojis/1552822464470581278.png?size=64'
+    },
+    '🏆 Top Coloist': {
+        label: 'Top Coloist',
+        url: 'https://cdn.discordapp.com/emojis/1552825535015424100.png?size=64'
+    },
+    '⚔️ T4 Conqueror': {
+        label: 'T4 Conqueror',
+        url: 'https://cdn.discordapp.com/emojis/1552825340940783737.png?size=64'
+    },
+    '🗝️ Solo Tormentor': {
+        label: 'Solo Tormentor',
+        url: 'https://cdn.discordapp.com/emojis/1552822344115036180.png?size=64'
+    }
+};
+
 async function loadHallOfFame() {
     const container = document.getElementById('hof-display');
     const selector = document.getElementById('hof-selector');
@@ -377,6 +396,11 @@ function renderMonth(idx) {
 
     container.innerHTML = month.awards.map(a => {
         const displayName = a.displayName || a.username || 'Unknown Member';
+        const awardPresentation = HOF_AWARD_EMOJIS[a.award] || { label: a.award, url: null };
+        const awardLabel = awardPresentation.label;
+        const awardEmoji = awardPresentation.url
+            ? `<img src="${escapeHTML(awardPresentation.url)}" alt="" class="hof-award-emoji" aria-hidden="true">`
+            : '';
         const avatar = a.avatarUrl
             ? `<img src="${escapeHTML(a.avatarUrl)}" alt="${escapeHTML(displayName)}" class="hof-award-avatar" loading="lazy">`
             : '<div class="hof-award-avatar hof-award-avatar-placeholder" aria-hidden="true">?</div>';
@@ -387,7 +411,7 @@ function renderMonth(idx) {
         return `
             <div class="hof-award-card">
                 ${avatar}
-                <div class="hof-award-label">${escapeHTML(a.award)}</div>
+                <div class="hof-award-label">${awardEmoji}<span>${escapeHTML(awardLabel)}</span></div>
                 <div class="hof-award-name">${escapeHTML(displayName)}</div>
                 ${awardImage}
             </div>
